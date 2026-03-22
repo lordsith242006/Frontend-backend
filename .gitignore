@@ -1,0 +1,6 @@
+backend/node_modules/
+backend/.env
+backend/*.sqlite
+backend/tmp-*.log
+frontend/build/
+frontend/node_modules/
