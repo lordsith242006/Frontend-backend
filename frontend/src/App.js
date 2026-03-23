@@ -274,7 +274,7 @@ export default function App() {
         setMessage('Товар обновлён.');
       } else {
         response = await productsApi.create(payload);
-        setMessage('Товар добавлен в каталог.');
+        setMessage('Товар добавлен.');
       }
 
       const savedProduct = response.data;
@@ -345,30 +345,30 @@ export default function App() {
       <div className="auth-shell">
         <section className="auth-card auth-card--editorial">
           <div className="auth-card__lead auth-card__lead--editorial">
-            <span className="eyebrow">Inventory Studio</span>
-            <h1>Каталог комплектующих с ролями и JWT-сессиями</h1>
+            <span className="eyebrow">Практика Frontend</span>
+            <h1>Каталог товаров с авторизацией и ролями пользователей</h1>
             <p>
-              Учебный проект по frontend/backend разработке с авторизацией, разграничением доступа и управлением
-              товарами.
+              Учебный проект по frontend/backend разработке. В приложении есть вход в систему, роли пользователей,
+              работа с товарами и административные функции.
             </p>
 
             <div className="auth-showcase">
               <div>
-                <strong>3 роли</strong>
+                <strong>Роли пользователей</strong>
                 <span>admin, moderator, user</span>
               </div>
               <div>
-                <strong>JWT + refresh</strong>
-                <span>автообновление токенов и blacklist</span>
+                <strong>Авторизация</strong>
+                <span>JWT access и refresh токены</span>
               </div>
               <div>
-                <strong>CRUD каталог</strong>
-                <span>поиск, фильтры, изображения и модальные формы</span>
+                <strong>Работа с каталогом</strong>
+                <span>поиск, фильтры, карточки товаров и формы редактирования</span>
               </div>
             </div>
 
             <div className="demo-accounts">
-              <span>Демо-доступ</span>
+              <span>Демо-аккаунты</span>
               <strong>admin / admin123</strong>
               <strong>moderator / mod12345</strong>
               <strong>user / user12345</strong>
@@ -413,7 +413,7 @@ export default function App() {
             {error ? <div className="notice notice--error">{error}</div> : null}
 
             <button type="submit" disabled={authLoading}>
-              {authLoading ? 'Подождите...' : mode === 'login' ? 'Открыть каталог' : 'Создать аккаунт'}
+              {authLoading ? 'Подождите...' : mode === 'login' ? 'Войти' : 'Создать аккаунт'}
             </button>
           </form>
         </section>
@@ -425,16 +425,14 @@ export default function App() {
     <div className="app-shell">
       <header className="topbar topbar--editorial">
         <div className="topbar__intro">
-          <span className="eyebrow">Inventory Studio</span>
-          <h1>Управление товарами и доступом</h1>
-          <p className="topbar__subtitle">
-            Каталог компонентов с ролью пользователя, историей сессий и отдельными инструментами администратора.
-          </p>
+          <span className="eyebrow">Практика Frontend</span>
+          <h1>Каталог товаров</h1>
+          <p className="topbar__subtitle">Проект с авторизацией, ролями пользователей и управлением товарами.</p>
         </div>
 
         <div className="topbar__actions">
           <div className="user-chip user-chip--editorial">
-            <span>Профиль</span>
+            <span>Пользователь</span>
             <strong>{user.username}</strong>
             <small>{getRoleLabel(user.role)}</small>
           </div>
@@ -449,11 +447,11 @@ export default function App() {
           <section className="panel panel--paper">
             <div className="panel__header">
               <div>
-                <span className="eyebrow">Навигация</span>
-                <h3>Фильтры каталога</h3>
-                <p>Поиск, категория и порядок выдачи.</p>
+                <span className="eyebrow">Фильтры</span>
+                <h3>Поиск по каталогу</h3>
+                <p>Можно искать товар по названию, категории и сортировке.</p>
               </div>
-              <span className="panel-tag">Live</span>
+              <span className="panel-tag">Форма</span>
             </div>
 
             <label>
@@ -508,14 +506,14 @@ export default function App() {
             <div className="panel__header">
               <div>
                 <span className="eyebrow">Сводка</span>
-                <h3>Что видно прямо сейчас</h3>
-                <p>Быстрый статус по текущей выборке товаров.</p>
+                <h3>Текущие данные</h3>
+                <p>Краткая информация по товарам, которые сейчас показаны в каталоге.</p>
               </div>
             </div>
 
             <dl className="stats-list stats-list--stacked">
               <div>
-                <dt>Всего позиций</dt>
+                <dt>Всего товаров</dt>
                 <dd>{products.length}</dd>
               </div>
               <div>
@@ -523,7 +521,7 @@ export default function App() {
                 <dd>{averageRating}</dd>
               </div>
               <div>
-                <dt>Низкий остаток</dt>
+                <dt>Мало на складе</dt>
                 <dd>{lowStockCount}</dd>
               </div>
               <div>
@@ -538,15 +536,15 @@ export default function App() {
               <div className="panel__header">
                 <div>
                   <span className="eyebrow">Действия</span>
-                  <h3>Редактор товаров</h3>
-                  <p>Создание и изменение карточек доступны авторизованным ролям.</p>
+                  <h3>Управление товарами</h3>
+                  <p>Создание и редактирование карточек доступно модератору и администратору.</p>
                 </div>
                 <span className="panel-tag">CRUD</span>
               </div>
               <button type="button" onClick={handleStartCreate}>
                 Добавить товар
               </button>
-              <p className="panel__hint">Функция доступна модератору и администратору.</p>
+              <p className="panel__hint">Для обычного пользователя эта функция недоступна.</p>
             </section>
           ) : null}
         </aside>
@@ -554,26 +552,26 @@ export default function App() {
         <section className="content">
           <section className="hero-panel hero-panel--editorial">
             <div className="hero-copy">
-              <span className="eyebrow">Панель каталога</span>
-              <h2>Светлая редакционная витрина вместо техно-дашборда</h2>
+              <span className="eyebrow">Главная панель</span>
+              <h2>Практика frontend с каталогом и авторизацией</h2>
               <p>
-                Интерфейс собран как учебная showcase-система: фильтры слева, большая сводка сверху и карточки товаров
-                в журнальной сетке.
+                На странице можно просматривать товары, применять фильтры, открывать карточки, а при наличии прав
+                добавлять и редактировать позиции.
               </p>
             </div>
 
             <div className="hero-panel__stats hero-panel__stats--editorial">
               <div>
                 <strong>{getRoleLabel(user.role)}</strong>
-                <span>активная роль</span>
+                <span>текущая роль</span>
               </div>
               <div>
-                <strong>{permissions.canDelete ? 'Полный' : permissions.canEdit ? 'Редактор' : 'Просмотр'}</strong>
+                <strong>{permissions.canDelete ? 'Полный' : permissions.canEdit ? 'Редактирование' : 'Просмотр'}</strong>
                 <span>уровень доступа</span>
               </div>
               <div>
                 <strong>{featuredProducts.length}</strong>
-                <span>выбранных карточки</span>
+                <span>карточек в верхнем блоке</span>
               </div>
             </div>
           </section>
@@ -592,7 +590,7 @@ export default function App() {
               </article>
             ))}
             {!featuredProducts.length ? (
-              <div className="empty-state empty-state--compact">После загрузки здесь появятся рекомендованные товары.</div>
+              <div className="empty-state empty-state--compact">После загрузки товаров здесь появятся несколько карточек из каталога.</div>
             ) : null}
           </section>
 
@@ -602,9 +600,9 @@ export default function App() {
           {permissions.canViewUsers ? (
             <section className="panel admin-toolbar panel--paper">
               <div>
-                <span className="eyebrow">Администрирование</span>
-                <h3>Служебные панели</h3>
-                <p className="panel__hint">Пользователи и blacklist открываются по запросу, чтобы не перегружать экран.</p>
+                <span className="eyebrow">Админ-панель</span>
+                <h3>Служебные разделы</h3>
+                <p className="panel__hint">По кнопке можно открыть список пользователей и статистику токенов.</p>
               </div>
               <button
                 type="button"
@@ -622,9 +620,9 @@ export default function App() {
                 <section className="panel panel--accent">
                   <div className="panel__header">
                     <div>
-                      <span className="eyebrow">Безопасность</span>
-                      <h3>Состояние токенов</h3>
-                      <p>Blacklist, access и refresh сессии.</p>
+                      <span className="eyebrow">Токены</span>
+                      <h3>Статистика авторизации</h3>
+                      <p>Данные по blacklist и активным сессиям.</p>
                     </div>
                     <span className="panel-tag">JWT</span>
                   </div>
@@ -654,7 +652,7 @@ export default function App() {
                       </div>
                     </dl>
                   ) : (
-                    <p className="panel__hint">Нажмите «Обновить», чтобы получить актуальную статистику.</p>
+                    <p className="panel__hint">Нажмите кнопку, чтобы получить актуальные данные.</p>
                   )}
                 </section>
               ) : null}
@@ -666,7 +664,7 @@ export default function App() {
           <section className="content__header">
             <div>
               <span className="eyebrow">Каталог</span>
-              <h2>{products.length} товаров в выдаче</h2>
+              <h2>{products.length} товаров</h2>
             </div>
             <button
               type="button"
@@ -679,7 +677,7 @@ export default function App() {
           </section>
 
           {productsLoading ? <div className="empty-state">Загрузка товаров...</div> : null}
-          {!productsLoading && products.length === 0 ? <div className="empty-state">По заданным фильтрам товары не найдены.</div> : null}
+          {!productsLoading && products.length === 0 ? <div className="empty-state">По выбранным параметрам товары не найдены.</div> : null}
 
           <div className="products-grid">
             {products.map((product) => (
