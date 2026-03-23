@@ -267,6 +267,45 @@ async function run() {
     'users endpoint should include the registered smoke-test account'
   );
 
+  const blockedUser = usersByAdmin.data.find((user) => user.username === username);
+  assert.ok(blockedUser, 'admin should be able to find a user to block');
+
+  const blockUser = await request(`/api/users/${blockedUser.id}/block`, {
+    method: 'PATCH',
+    headers: {
+      Authorization: `Bearer ${refresh.data.accessToken}`
+    }
+  });
+  assert.equal(blockUser.status, 200, 'admin should be able to block users');
+  assert.equal(blockUser.data.user.isBlocked, true, 'blocked user should be marked as blocked');
+
+  const blockedLogin = await request('/api/auth/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ username, password })
+  });
+  assert.equal(blockedLogin.status, 403, 'blocked user must not be able to log in');
+
+  const unblockUser = await request(`/api/users/${blockedUser.id}/unblock`, {
+    method: 'PATCH',
+    headers: {
+      Authorization: `Bearer ${refresh.data.accessToken}`
+    }
+  });
+  assert.equal(unblockUser.status, 200, 'admin should be able to unblock users');
+  assert.equal(unblockUser.data.user.isBlocked, false, 'unblocked user should be marked as active');
+
+  const loginAfterUnblock = await request('/api/auth/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ username, password })
+  });
+  assert.equal(loginAfterUnblock.status, 200, 'unblocked user should be able to log in again');
+
   const logout = await request('/api/auth/logout', {
     method: 'POST',
     headers: {

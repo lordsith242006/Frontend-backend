@@ -336,6 +336,34 @@ export default function App() {
     }
   }
 
+  async function handleToggleUserBlock(targetUser) {
+    if (!targetUser) {
+      return;
+    }
+
+    const shouldBlock = !targetUser.isBlocked;
+    const confirmMessage = shouldBlock
+      ? `Заблокировать пользователя ${targetUser.username}?`
+      : `Разблокировать пользователя ${targetUser.username}?`;
+
+    if (!window.confirm(confirmMessage)) {
+      return;
+    }
+
+    setError('');
+
+    try {
+      const response = shouldBlock
+        ? await adminApi.blockUser(targetUser.id)
+        : await adminApi.unblockUser(targetUser.id);
+
+      setMessage(response.data.message);
+      await loadUsers();
+    } catch (toggleError) {
+      setError(toggleError.response?.data?.error || 'Не удалось изменить статус пользователя.');
+    }
+  }
+
   function handleResetFilters() {
     setFilters(initialFilters);
   }
@@ -657,7 +685,13 @@ export default function App() {
                 </section>
               ) : null}
 
-              <UsersPanel users={users} loading={usersLoading} onReload={loadUsers} />
+              <UsersPanel
+                users={users}
+                loading={usersLoading}
+                currentUserId={user.id}
+                onReload={loadUsers}
+                onToggleBlock={handleToggleUserBlock}
+              />
             </section>
           ) : null}
 

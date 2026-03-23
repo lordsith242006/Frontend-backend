@@ -135,6 +135,12 @@ export const authApi = {
 export const adminApi = {
   listUsers() {
     return api.get('/users');
+  },
+  blockUser(id) {
+    return api.patch(`/users/${id}/block`);
+  },
+  unblockUser(id) {
+    return api.patch(`/users/${id}/unblock`);
   }
 };
 
