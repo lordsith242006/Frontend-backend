@@ -123,7 +123,8 @@ async function run() {
     },
     body: JSON.stringify({ username: `${username}_admin`, password, role: 'admin' })
   });
-  assert.equal(registerAdminAttempt.status, 403, 'public registration must reject privileged roles');
+  assert.equal(registerAdminAttempt.status, 201, 'registration should allow creating an account with the selected role');
+  assert.equal(registerAdminAttempt.data.user.role, 'admin', 'registration should store the selected role');
 
   const loginUser = await request('/api/auth/login', {
     method: 'POST',

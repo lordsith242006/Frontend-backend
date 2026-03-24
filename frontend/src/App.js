@@ -12,11 +12,12 @@ import {
   resolveAssetUrl,
   saveTokens
 } from './api';
-import { categoryOptions, getCategoryLabel, getRoleLabel } from './labels';
+import { categoryOptions, getCategoryLabel, getRoleLabel, roleOptions } from './labels';
 
 const emptyAuthForm = {
   username: '',
-  password: ''
+  password: '',
+  role: 'user'
 };
 
 const initialFilters = {
@@ -170,9 +171,10 @@ export default function App() {
       if (mode === 'register') {
         await authApi.register({
           username: authForm.username,
-          password: authForm.password
+          password: authForm.password,
+          role: authForm.role
         });
-        setMessage('Регистрация завершена. Новый аккаунт создаётся с ролью пользователя.');
+        setMessage(`Регистрация завершена. Новый аккаунт создан с ролью: ${getRoleLabel(authForm.role)}.`);
         setMode('login');
         setAuthForm((current) => ({ ...emptyAuthForm, username: current.username }));
       } else {
@@ -434,7 +436,20 @@ export default function App() {
             </label>
 
             {mode === 'register' ? (
-              <p className="panel__hint">Самостоятельная регистрация создаёт только роль пользователя.</p>
+              <label>
+                <span>Роль</span>
+                <select name="role" value={authForm.role} onChange={handleAuthFieldChange}>
+                  {roleOptions.map((role) => (
+                    <option key={role.value} value={role.value}>
+                      {role.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ) : null}
+
+            {mode === 'register' ? (
+              <p className="panel__hint">При регистрации можно выбрать роль для нового аккаунта.</p>
             ) : null}
 
             {message ? <div className="notice notice--success">{message}</div> : null}

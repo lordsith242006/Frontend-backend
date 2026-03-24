@@ -8,6 +8,12 @@ export const categoryOptions = [
   { value: 'PSU', label: 'Блок питания' }
 ];
 
+export const roleOptions = [
+  { value: 'user', label: 'Пользователь' },
+  { value: 'moderator', label: 'Модератор' },
+  { value: 'admin', label: 'Администратор' }
+];
+
 const categoryLabelMap = Object.fromEntries(categoryOptions.map((item) => [item.value, item.label]));
 
 const roleLabelMap = {

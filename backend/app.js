@@ -572,11 +572,10 @@ app.post('/api/auth/register', async (req, res) => {
   }
 
   const normalizedUsername = String(username).trim().toLowerCase();
-  if (role && role !== 'user') {
-    return res.status(403).json({ error: 'Самостоятельная регистрация доступна только для обычного пользователя' });
+  const selectedRole = String(role || 'user').trim();
+  if (!VALID_ROLES.includes(selectedRole)) {
+    return res.status(400).json({ error: 'Указана недопустимая роль' });
   }
-
-  const selectedRole = 'user';
   const existingUser = await get('SELECT id FROM users WHERE username = ?', [normalizedUsername]);
 
   if (existingUser) {
