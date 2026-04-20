@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#8c4a36">
+    <link rel="apple-touch-icon" href="/icons/favicon-152x152.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="icon" href="/icons/favicon.ico" sizes="16x16" type="image/x-icon">
+    <title>Практика 13-18</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="page-shell">
+        <div class="page-shell__backdrop"></div>
+
+        <div class="workspace-card">
+            <header class="workspace-header">
+                <div class="workspace-header__intro">
+                    <span class="kicker">Практика 13-18</span>
+                    <h1>Локальные заметки с push-уведомлениями и offline-режимом</h1>
+                    <p>
+                        Учебное приложение, в котором объединены App Shell, Service Worker, HTTPS, WebSocket и push-напоминания.
+                    </p>
+                </div>
+
+                <nav class="workspace-nav" aria-label="Навигация по приложению">
+                    <button id="home-btn" class="nav-button is-active" type="button">Главная</button>
+                    <button id="about-btn" class="nav-button" type="button">О проекте</button>
+                </nav>
+            </header>
+
+            <main id="app-content" class="workspace-content"></main>
+
+            <footer class="workspace-footer">
+                <div class="workspace-footer__text">
+                    <strong>Уведомления</strong>
+                    <span>Их можно включить для моментальных задач и отложенных напоминаний.</span>
+                </div>
+
+                <div class="workspace-footer__actions">
+                    <button id="enable-push" class="action-button action-button--brand" type="button">
+                        Включить уведомления
+                    </button>
+                    <button id="disable-push" class="action-button action-button--ghost" type="button" hidden>
+                        Отключить уведомления
+                    </button>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <div id="live-toast" class="live-toast" hidden></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/app.js"></script>
+</body>
+</html>

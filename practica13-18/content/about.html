@@ -1,0 +1,59 @@
+<section class="about-layout">
+    <article class="panel-card">
+        <div class="panel-card__header">
+            <span class="kicker">О проекте</span>
+            <h2>Что показывает эта практика</h2>
+        </div>
+
+        <p class="about-lead">
+            Приложение собрано как единый учебный пример по темам 13-18: PWA, App Shell, HTTPS, push-уведомления и работа в офлайн-режиме.
+        </p>
+
+        <ul class="feature-list">
+            <li>страницы кешируются через Service Worker и доступны без сети</li>
+            <li>manifest позволяет установить приложение как PWA</li>
+            <li>HTTPS запускается локально с сертификатом</li>
+            <li>задачи передаются через WebSocket и push</li>
+            <li>напоминание можно отложить на 5 минут прямо из уведомления</li>
+        </ul>
+    </article>
+
+    <article class="panel-card panel-card--accent about-meta">
+        <div class="panel-card__header">
+            <span class="kicker">HTTPS</span>
+            <h3>Информация о сертификате</h3>
+        </div>
+
+        <dl class="meta-list">
+            <div>
+                <dt>Origin</dt>
+                <dd id="about-origin">https://localhost:3000</dd>
+            </div>
+            <div>
+                <dt>Subject</dt>
+                <dd id="about-subject">-</dd>
+            </div>
+            <div>
+                <dt>Issuer</dt>
+                <dd id="about-issuer">-</dd>
+            </div>
+            <div>
+                <dt>Действует с</dt>
+                <dd id="about-valid-from">-</dd>
+            </div>
+            <div>
+                <dt>Действует до</dt>
+                <dd id="about-valid-to">-</dd>
+            </div>
+            <div>
+                <dt>SHA-256</dt>
+                <dd id="about-fingerprint">-</dd>
+            </div>
+        </dl>
+
+        <details class="certificate-details">
+            <summary>Показать PEM сертификата</summary>
+            <pre id="certificate-pem" class="certificate-code">Загрузка...</pre>
+        </details>
+    </article>
+</section>

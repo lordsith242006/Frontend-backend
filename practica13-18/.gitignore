@@ -1,0 +1,6 @@
+node_modules/
+cert.json
+vapid.json
+localhost.pem
+localhost-key.pem
+*.log
